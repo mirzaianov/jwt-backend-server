@@ -73,3 +73,19 @@ export function refresh(req, res) {
     return res.status(403).json({ message: 'Invalid refresh token' });
   }
 }
+
+export function logout(req, res) {
+  const token = req.cookies.refreshToken;
+
+  if (token) {
+    revokeRefreshToken(token); // Remove it from the in-memory store
+  }
+
+  res.clearCookie('refreshToken', {
+    httpOnly: true,
+    secure: false,
+    sameSite: 'lax',
+  });
+
+  return res.json({ message: 'Logged out successfully' });
+}

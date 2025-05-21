@@ -2,7 +2,12 @@ import express from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 
-import { login, getUser, refresh } from './controllers/authController.js';
+import {
+  login,
+  getUser,
+  refresh,
+  logout,
+} from './controllers/authController.js';
 import authenticateAccessToken from './middleware/authMiddleware.js';
 
 const app = express();
@@ -16,6 +21,7 @@ app.use(cookieParser());
 app.post('/login', login);
 app.get('/user', authenticateAccessToken, getUser);
 app.post('/refresh', refresh);
+app.post('/logout', logout);
 
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
