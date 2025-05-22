@@ -1,4 +1,4 @@
-import user from '../models/user.js';
+import { users } from '../models/users.js';
 import {
   generateAccessToken,
   generateRefreshToken,
@@ -12,11 +12,20 @@ import {
 } from '../utils/tokenStore.js';
 
 export function login(req, res) {
+  const { email, password } = req.body;
+
+  // Find user in the mock database
+  const user = users.find((u) => u.email === email && u.password === password);
+
+  if (!user) {
+    return res.status(401).json({ message: 'Invalid email or password' });
+  }
+
   const payload = { id: user.id, name: user.name, email: user.email };
 
   const accessToken = generateAccessToken(payload);
   const refreshToken = generateRefreshToken(payload);
-  storeRefreshToken(refreshToken); // Store the token on login
+  storeRefreshToken(refreshToken);
 
   res.cookie('refreshToken', refreshToken, {
     httpOnly: true,
@@ -29,7 +38,11 @@ export function login(req, res) {
 }
 
 export function getUser(req, res) {
-  res.json({ user });
+  const user = users.find((u) => u.id === req.user.id);
+  if (!user) {
+    return res.status(404).json({ message: 'User not found' });
+  }
+  res.json({ user: { id: user.id, name: user.name, email: user.email } });
 }
 
 export function refresh(req, res) {
@@ -47,8 +60,6 @@ export function refresh(req, res) {
 
   try {
     const decoded = verifyRefreshToken(oldToken);
-
-    // Revoke old token and generate new ones
     revokeRefreshToken(oldToken);
 
     const newPayload = {
@@ -78,7 +89,7 @@ export function logout(req, res) {
   const token = req.cookies.refreshToken;
 
   if (token) {
-    revokeRefreshToken(token); // Remove it from the in-memory store
+    revokeRefreshToken(token);
   }
 
   res.clearCookie('refreshToken', {
