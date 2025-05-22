@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 
-const ACCESS_TOKEN_SECRET = 'youraccesstokensecret';
-const REFRESH_TOKEN_SECRET = 'yourrefreshtokensecret';
+const ACCESS_TOKEN_SECRET = 'accessTokenSecret';
+const REFRESH_TOKEN_SECRET = 'refreshTokenSecret';
 
 export function generateAccessToken(user) {
   return jwt.sign(user, ACCESS_TOKEN_SECRET, { expiresIn: '15m' });

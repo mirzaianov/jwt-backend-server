@@ -1,4 +1,3 @@
-// A basic in-memory store for refresh tokens (use Redis or DB in production)
 const tokenStore = new Set();
 
 export function storeRefreshToken(token) {
