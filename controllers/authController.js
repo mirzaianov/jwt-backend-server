@@ -25,6 +25,7 @@ export function login(req, res) {
 
   const accessToken = generateAccessToken(payload);
   const refreshToken = generateRefreshToken(payload);
+
   storeRefreshToken(refreshToken);
 
   res.cookie('refreshToken', refreshToken, {
@@ -34,7 +35,7 @@ export function login(req, res) {
     maxAge: 7 * 24 * 60 * 60 * 1000,
   });
 
-  res.json({ accessToken, refreshToken });
+  res.json({ accessToken });
 }
 
 export function getUser(req, res) {
