@@ -1,6 +1,6 @@
-import { verifyAccessToken } from '../utils/tokenUtils.js';
+import { verifyAccessToken, verifyRefreshToken } from '../utils/tokenUtils.js';
 
-export default function authenticateAccessToken(req, res, next) {
+export function authenticateAccessToken(req, res, next) {
   const authHeader = req.headers['authorization'];
   const accessToken = authHeader?.split(' ')[1];
 
@@ -15,5 +15,24 @@ export default function authenticateAccessToken(req, res, next) {
     next();
   } catch {
     return res.status(403).json({ message: 'Invalid or expired access token' });
+  }
+}
+
+export function authenticateRefreshToken(req, res, next) {
+  const refreshToken = req.cookies.refreshToken;
+
+  if (!refreshToken) {
+    return res.status(401).json({ message: 'Refresh token missing' });
+  }
+
+  try {
+    const user = verifyRefreshToken(refreshToken);
+
+    req.user = user;
+    next();
+  } catch {
+    return res
+      .status(403)
+      .json({ message: 'Invalid or expired refresh token' });
   }
 }

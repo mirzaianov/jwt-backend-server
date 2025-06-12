@@ -6,7 +6,10 @@ import login from './controllers/login.js';
 import user from './controllers/user.js';
 import refresh from './controllers/refresh.js';
 import logout from './controllers/logout.js';
-import authenticateAccessToken from './middleware/authMiddleware.js';
+import {
+  authenticateAccessToken,
+  authenticateRefreshToken,
+} from './middleware/authMiddleware.js';
 import {
   CLIENT_BASE_URL,
   SERVER_BASE_PORT,
@@ -21,7 +24,7 @@ app.use(cookieParser());
 
 app.post('/signup', signup);
 app.post('/login', login);
-app.post('/logout', logout);
+app.post('/logout', authenticateRefreshToken, logout);
 app.get('/user', authenticateAccessToken, user);
 app.post('/refresh', refresh);
 

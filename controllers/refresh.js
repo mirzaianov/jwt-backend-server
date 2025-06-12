@@ -8,6 +8,7 @@ import {
   isRefreshTokenStored,
   revokeRefreshToken,
 } from '../utils/tokenStore.js';
+import { REFRESH_TOKEN_EXPIRATION_TIME } from '../constants.js';
 
 export default function refresh(req, res) {
   const oldToken = req.cookies.refreshToken;
@@ -42,7 +43,7 @@ export default function refresh(req, res) {
       httpOnly: true,
       secure: false,
       sameSite: 'lax',
-      maxAge: 7 * 24 * 60 * 60 * 1000,
+      maxAge: REFRESH_TOKEN_EXPIRATION_TIME,
     });
 
     res.json({ accessToken: newAccessToken });

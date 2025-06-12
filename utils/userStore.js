@@ -1,4 +1,4 @@
-const userStore = new Set();
+export const userStore = new Set();
 
 export function isUserInStore(credential) {
   for (const user of userStore) {
@@ -26,14 +26,4 @@ export function getUser(credential) {
   }
 
   return null;
-}
-
-export function deleteUser(user) {
-  if (isUserInStore(user)) {
-    userStore.delete(user);
-  } else {
-    throw new Error('User not found');
-  }
-
-  console.log('userStore >> ', userStore);
 }

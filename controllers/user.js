@@ -1,32 +1,19 @@
-import fs from 'fs/promises';
-import path from 'path';
-import { fileURLToPath } from 'url';
+import { userStore } from '../utils/userStore.js';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-const filePath = path.join(__dirname, '..', 'db.json');
-
-async function readFileAsync() {
+export default function user(req, res) {
   try {
-    const data = await fs.readFile(filePath, 'utf8');
+    const data = userStore;
 
-    console.log('File content (async):');
-    console.log(data);
-    return data;
-  } catch (err) {
-    console.error('Error reading file asynchronously:', err);
-    return null;
-  }
-}
+    if (!data || (data && data.length === 0)) {
+      return res.status(404).json({ message: 'User data not found' }); // Corrected response message
+    }
 
-export default async function user(req, res) {
-  try {
-    // 1. Read the file asynchronously
-    const fileContent = await readFileAsync();
-
-    // 2. Parse the JSON data
-    const jsonData = await JSON.parse(fileContent);
+    const jsonData = Array.from(data).map((user) => ({
+      email: user.email,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      phoneNumber: user.phoneNumber,
+    }));
 
     // 4. Send a single, consolidated response
     res.json(jsonData);
