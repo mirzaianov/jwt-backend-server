@@ -2,14 +2,15 @@ import { verifyAccessToken } from '../utils/tokenUtils.js';
 
 export default function authenticateAccessToken(req, res, next) {
   const authHeader = req.headers['authorization'];
-  const token = authHeader?.split(' ')[1];
+  const accessToken = authHeader?.split(' ')[1];
 
-  if (!token) {
+  if (!accessToken) {
     return res.status(401).json({ message: 'Access token missing' });
   }
 
   try {
-    const user = verifyAccessToken(token);
+    const user = verifyAccessToken(accessToken);
+
     req.user = user;
     next();
   } catch {

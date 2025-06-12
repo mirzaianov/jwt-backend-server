@@ -8,7 +8,7 @@ export function generateAccessToken(user) {
 }
 
 export function generateRefreshToken(user) {
-  return jwt.sign(user, REFRESH_TOKEN_SECRET, { expiresIn: '7d' });
+  return jwt.sign(user, REFRESH_TOKEN_SECRET, { expiresIn: '30d' });
 }
 
 export function verifyAccessToken(token) {
