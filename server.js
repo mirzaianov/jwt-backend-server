@@ -6,10 +6,8 @@ import login from './controllers/login.js';
 import user from './controllers/user.js';
 import refresh from './controllers/refresh.js';
 import logout from './controllers/logout.js';
-import {
-  authenticateAccessToken,
-  authenticateRefreshToken,
-} from './middleware/authMiddleware.js';
+import { authenticateRefreshToken } from './middleware/authenticateRefreshToken.js';
+import { authenticateAccessToken } from './middleware/authenticateAccessToken.js';
 import {
   CLIENT_BASE_URL,
   SERVER_BASE_PORT,

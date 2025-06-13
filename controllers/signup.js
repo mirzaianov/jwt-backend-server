@@ -1,10 +1,10 @@
 import { REFRESH_TOKEN_EXPIRATION_TIME } from '../constants.js';
-import { storeRefreshToken } from '../utils/tokenStore.js';
+import { storeRefreshToken } from '../model/tokenStore.js';
 import {
   // generateAccessToken,
   generateRefreshToken,
 } from '../utils/tokenUtils.js';
-import { storeUser } from '../utils/userStore.js';
+import { storeUser } from '../model/userStore.js';
 
 export default function signup(req, res) {
   try {

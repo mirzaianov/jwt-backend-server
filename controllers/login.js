@@ -2,8 +2,8 @@ import {
   // generateAccessToken,
   generateRefreshToken,
 } from '../utils/tokenUtils.js';
-import { storeRefreshToken } from '../utils/tokenStore.js';
-import { getUser, isUserInStore } from '../utils/userStore.js';
+import { storeRefreshToken } from '../model/tokenStore.js';
+import { getUser, isUserInStore } from '../model/userStore.js';
 import { REFRESH_TOKEN_EXPIRATION_TIME } from '../constants.js';
 
 export default function login(req, res) {

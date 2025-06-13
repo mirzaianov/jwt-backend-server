@@ -1,4 +1,4 @@
-import { userStore } from '../utils/userStore.js';
+import { userStore } from '../model/userStore.js';
 
 export default function user(req, res) {
   try {

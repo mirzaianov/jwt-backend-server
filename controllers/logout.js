@@ -1,4 +1,4 @@
-import { revokeRefreshToken } from '../utils/tokenStore.js';
+import { revokeRefreshToken } from '../model/tokenStore.js';
 
 export default function logout(req, res) {
   try {
