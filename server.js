@@ -24,7 +24,7 @@ app.post('/signup', signup);
 app.post('/login', login);
 app.post('/logout', authenticateRefreshToken, logout);
 app.get('/user', authenticateAccessToken, user);
-app.post('/refresh', refresh);
+app.post('/refresh', authenticateRefreshToken, refresh);
 
 app.listen(SERVER_BASE_PORT, () => {
   console.log(`Server running at ${SERVER_BASE_URL}`);
