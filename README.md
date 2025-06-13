@@ -41,10 +41,10 @@ Client is set on [http://localhost:3000/](http://localhost:3000/)
 
 > [!CAUTION]
 > You must change the client url settings in the `constants.js` file if you want to run use a different server
->
+
 > [!IMPORTANT]
 > Users and tokens will be stored only in the server memory during the runtime
->
+
 > [!NOTE]
 > An access token lives for 15 minutes (and a refresh token for 30 days)
 
