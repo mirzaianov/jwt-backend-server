@@ -10,13 +10,13 @@ export function isUserInStore(credential) {
 }
 
 export function storeUser(user) {
-  if (!isUserInStore(user)) {
+  if (!isUserInStore(user.email) && !isUserInStore(user.phoneNumber)) {
     userStore.add(user);
   } else {
     throw new Error('User already exists');
   }
 
-  console.log('userStore >> ', userStore);
+  console.log('User added. userStore >> ', userStore);
 }
 
 export function getUser(credential) {
