@@ -28,26 +28,25 @@ export default function signup(req, res) {
     try {
       // Add the new user to the temporary store
       storeUser(newUser);
+      // Create tokens
+      // const accessToken = generateAccessToken(newUser);
+      const refreshToken = generateRefreshToken(newUser);
+
+      storeRefreshToken(refreshToken);
+
+      res.cookie('refreshToken', refreshToken, {
+        httpOnly: true,
+        secure: false,
+        sameSite: 'lax',
+        maxAge: REFRESH_TOKEN_EXPIRATION_TIME,
+      });
+
+      // res.status(201).json({ accessToken });
+      res.status(201).json({ message: 'User signed up successfully' });
     } catch (error) {
       console.error('Error storing user:', error);
       res.status(409).json({ message: 'User already exists' });
     }
-
-    // Create tokens
-    // const accessToken = generateAccessToken(newUser);
-    const refreshToken = generateRefreshToken(newUser);
-
-    storeRefreshToken(refreshToken);
-
-    res.cookie('refreshToken', refreshToken, {
-      httpOnly: true,
-      secure: false,
-      sameSite: 'lax',
-      maxAge: REFRESH_TOKEN_EXPIRATION_TIME,
-    });
-
-    // res.status(201).json({ accessToken });
-    res.status(201).json({ message: 'User signed up successfully' });
   } catch (error) {
     console.error('Error during signup:', error);
     // Generic error for unexpected issues
