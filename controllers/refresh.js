@@ -1,45 +1,36 @@
 import {
   generateAccessToken,
-  generateRefreshToken,
   verifyRefreshToken,
 } from '../utils/tokenUtils.js';
-import {
-  storeRefreshToken,
-  isRefreshTokenStored,
-  revokeRefreshToken,
-} from '../utils/tokenStore.js';
+import { isRefreshTokenStored } from '../model/tokenStore.js';
 import { REFRESH_TOKEN_EXPIRATION_TIME } from '../constants.js';
 
 export default function refresh(req, res) {
-  const oldToken = req.cookies.refreshToken;
+  const refreshToken = req.cookies.refreshToken;
 
-  if (!oldToken) {
+  if (!refreshToken) {
     return res.status(401).json({ message: 'Refresh token missing' });
   }
 
-  if (!isRefreshTokenStored(oldToken)) {
+  if (!isRefreshTokenStored(refreshToken)) {
     return res
       .status(403)
       .json({ message: 'Refresh token invalid or already used' });
   }
 
   try {
-    const decoded = verifyRefreshToken(oldToken);
-
-    revokeRefreshToken(oldToken);
+    const decoded = verifyRefreshToken(refreshToken);
 
     const newPayload = {
-      id: decoded.id,
-      name: decoded.name,
-      email: decoded.email,
+      firstName: decoded.firstName,
+      lastName: decoded.firstName,
+      email: decoded.firstName,
+      phoneNumber: decoded.firstName,
     };
 
     const newAccessToken = generateAccessToken(newPayload);
-    const newRefreshToken = generateRefreshToken(newPayload);
 
-    storeRefreshToken(newRefreshToken);
-
-    res.cookie('refreshToken', newRefreshToken, {
+    res.cookie('refreshToken', refreshToken, {
       httpOnly: true,
       secure: false,
       sameSite: 'lax',
