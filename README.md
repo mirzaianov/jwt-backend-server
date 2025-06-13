@@ -36,7 +36,7 @@
 Node.js will start the server on [http://localhost:4000/](http://localhost:4000/)
 
 > [!CAUTION]
-> You must change the client url settings in the `constants.js` file if you want to run use a different server
+> You must change the client url settings in the `constants.js` file if you want to use a different client
 
 > [!IMPORTANT]
 > Users and tokens will be stored only in the server memory during the runtime
