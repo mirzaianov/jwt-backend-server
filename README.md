@@ -39,14 +39,14 @@ Node.js will start the server on [http://localhost:4000/](http://localhost:4000/
 > You must change the client url settings in the `constants.js` file if you want to use a different client
 
 > [!IMPORTANT]
-> Users and tokens will be stored only in the server memory during the runtime
+> Users and tokens are stored in the server memory only during runtime. That means if you restart the server, the data will be lost
 
 > [!NOTE]
 > An access token lives for 15 minutes (and a refresh token for 30 days)
 
 ### Client side
 
-Client is set on [http://localhost:3000/](http://localhost:3000/)
+By default, the client is set on [http://localhost:3000/](http://localhost:3000/)
 
 ### Signup
 
