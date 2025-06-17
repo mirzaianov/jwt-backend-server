@@ -8,10 +8,12 @@ import { REFRESH_TOKEN_EXPIRATION_TIME } from '../constants.js';
 export default function refresh(req, res) {
   const refreshToken = req.cookies.refreshToken;
 
+  // Check if the refresh token is present
   if (!refreshToken) {
     return res.status(401).json({ message: 'Refresh token missing' });
   }
 
+  // Check if the refresh token is stored
   if (!isRefreshTokenStored(refreshToken)) {
     return res
       .status(403)
